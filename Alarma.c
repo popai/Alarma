@@ -338,7 +338,6 @@ static void TaskSenzorL()
 	static int8_t senzorL = 0;
 	if (armat && !alarm)
 	{
-
 		if ((SENZOR_PINS & (1 << SENZOR_PIN)) && !senzorL) //(PIND & (1 << PD2)) == 1)
 		{
 			UWriteString("Senzor intarziat activat");
@@ -357,7 +356,7 @@ static void TaskSenzorL()
 		}
 	}
 
-	if (senzorL && (contor_s == 20))
+	if (senzorL && (contor_s % 20 == 0))
 	{
 		senzorL = 0;
 		if (armat && !alarm)
