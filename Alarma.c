@@ -251,7 +251,7 @@ static void TaskAlarma()
 			passOK = 1;
 
 		}
-		else
+		else if(password != 0)
 		{
 			//Not Allowed to change password
 			Buzer_PassNotOK();
