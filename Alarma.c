@@ -311,16 +311,6 @@ static void TaskSenzorR()
 	else if ((PIND & (1 << PD5)) == 0)
 		senzor_pull = 1;
 
-
-	/*
-	 //opresc sirena dupa 2min
-	 if (contor_m == 2 && senzor_pull)
-	 {
-	 ALARMOff();
-	 senzor_pull = 0;
-	 UWriteString("Sirena oprita"));
-	 }
-	 */
 #ifdef portHD44780_LCD
 	lcd_Locate (0, 0);
 	lcd_Printf_P(PSTR("Sys Tick:%7lu"), time(NULL));
