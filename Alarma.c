@@ -287,7 +287,7 @@ static void TaskSenzorR()
 
 	if (armat && !alarm)
 	{
-		if ((PINC & (1 << PC3)) ||(PIND & (1 << PD4)) || (PIND & (1 << PD5)))
+		if ((PIND & (1 << PD3)) || (PIND & (1 << PD4)) || (PIND & (1 << PD5)))
 		{
 			UWriteString("Senzor rapid activat");
 			ALARMOn();
@@ -297,7 +297,7 @@ static void TaskSenzorR()
 			UWriteString("Sirena pornita");
 		}
 	}
-/*
+
 	else if (!armat && !alarm)
 	{
 		if (PINC & (1 << PC3)) //Buton panica
