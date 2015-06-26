@@ -13,8 +13,8 @@
 #define ALARM_PIN 		PD7
 #define SENZOR_PINS		PIND
 #define SENZOR_PIN		PD2
-//#define BUZER_PORT		PORTD
-//#define BUZER_PIN		PD3
+#define BUZER_PORT		PORTC
+#define BUZER_PIN		PC3
 #define ARMLED_PORT		PORTB
 #define ARMLED_PIN		PB4
 //#define ARMLEDOFF_PIN		PB5

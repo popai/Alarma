@@ -7,8 +7,8 @@
  */
 
 #include <avr/io.h>
+#include <util/delay.h>
 
-#include "lib/sound/sound.h"
 #include "user_input.h"
 #include "pinDef.h"
 
@@ -88,12 +88,39 @@ uint8_t GetAlarm()
 
 void Buzer_PassOK()
 {
-	play("T240 L8 >ac#adaeaf4");
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(50);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
 }
 
 void Buzer_PassNotOK()
 {
-	play("L16 <a<a<a<a<a<a");
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(100);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(100);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(100);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(100);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
+	_delay_ms(100);
+	BUZER_PORT |= (1 << BUZER_PIN);
+	_delay_ms(50);
+	BUZER_PORT &= (~(1 << BUZER_PIN));
 
 }
-

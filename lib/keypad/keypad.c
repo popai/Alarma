@@ -9,9 +9,7 @@
 #include <avr/io.h>
 #include <inttypes.h>
 #include <util/delay.h>
-
-// Sound include file
-#include "../sound/sound.h"
+#include "../../pinDef.h"
 
 #include "keypad.h"
 
@@ -42,7 +40,9 @@ uint8_t GetKeyPressed()
 	_delay_ms(10);
 	if (!(PINB & (1 << PB3)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 10;
 		return 10;
 	}
@@ -52,7 +52,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB2)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 7;
 		return 7;
 	}
@@ -61,7 +63,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB1)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 4;
 		return 4;
 	}
@@ -70,7 +74,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB0)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 1;
 		return 1;
 	}
@@ -82,7 +88,9 @@ uint8_t GetKeyPressed()
 	_delay_ms(10);
 	if (!(PINB & (1 << PB3)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 0;
 		return 0;
 	}
@@ -92,7 +100,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB2)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 8;
 		return 8;
 	}
@@ -101,7 +111,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB1)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 5;
 		return 5;
 	}
@@ -110,7 +122,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB0)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 2;
 		return 2;
 	}
@@ -122,7 +136,9 @@ uint8_t GetKeyPressed()
 	_delay_ms(10);
 	if (!(PINB & (1 << PB3)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 11;
 		return 11;
 	}
@@ -132,7 +148,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB2)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 9;
 		return 9;
 	}
@@ -141,7 +159,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB1)) && (notpress == 100))
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 6;
 		return 6;
 	}
@@ -150,7 +170,9 @@ uint8_t GetKeyPressed()
 
 	if (!(PINB & (1 << PB0)) && (notpress == 100)) //(PINB & (1 << PB3)) == 0
 	{
-		playFrequency(3000, 50); // key tone
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
 		notpress = 3;
 		return 3;
 	}

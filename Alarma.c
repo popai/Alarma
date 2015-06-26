@@ -54,7 +54,6 @@
 #include "lib/eeprom/eeprom.h"
 #include "lib/timer/timer.h"
 #include "lib/usart/usart.h"
-#include "lib/sound/sound.h"
 
 #ifdef portHD44780_LCD
 /* LCD (Freetronics 16x2) interface include file. */
@@ -200,7 +199,7 @@ static void TaskAlarma()
 			//vTaskDelayUntil( &xLastWakeTime, ( 15000 / portTICK_PERIOD_MS ) );
 			while (contor_s < 30) //weit 15s
 			{
-				playFrequency(5230, 100); // ok tone
+				Buzer_PassOK();
 				_delay_ms(500);
 			}
 			//playFrequency( 150, 50); // armare tone
@@ -217,7 +216,7 @@ static void TaskAlarma()
 
 		//If user enters 0000 as password it
 		//indicates a request to change password
-		playFrequency(1500, 50); // armare tone
+		Buzer_PassOK();
 
 #ifdef DEBUG
 		UWriteString("Schimba parola");
@@ -288,7 +287,7 @@ static void TaskSenzorR()
 
 	if (armat && !alarm)
 	{
-		if ((PIND & (1 << PD4)) || (PIND & (1 << PD5)))
+		if ((PINC & (1 << PC3)) ||(PIND & (1 << PD4)) || (PIND & (1 << PD5)))
 		{
 			UWriteString("Senzor rapid activat");
 			ALARMOn();
@@ -298,7 +297,7 @@ static void TaskSenzorR()
 			UWriteString("Sirena pornita");
 		}
 	}
-
+/*
 	else if (!armat && !alarm)
 	{
 		if (PINC & (1 << PC3)) //Buton panica
@@ -345,7 +344,9 @@ static void TaskSenzorL()
 			senzorL = 1;
 			for (uint8_t n = 0; n < 15; ++n)
 			{
-				playFrequency(1500, 50);
+				BUZER_PORT |= (1 << BUZER_PIN);
+				_delay_ms(50);
+				BUZER_PORT &= (~(1 << BUZER_PIN));
 				_delay_ms(500);
 			}
 			//playFrequency( 1500, 50); // senzor activ tone
@@ -383,7 +384,10 @@ static void TaskSemnale(void *pvParameters) // actiouni alarma
 	if (((PIND & (1 << PD6)) == 0) && (contor_s % 20 == 15))
 	{
 		//play(">ARR>ARR>A");
-		playFrequency(3000, 50);
+		BUZER_PORT |= (1 << BUZER_PIN);
+		_delay_ms(50);
+		BUZER_PORT &= (~(1 << BUZER_PIN));
+
 		//vTaskDelayUntil(&xLastWakeTime, (1000 / portTICK_PERIOD_MS));
 
 	}
