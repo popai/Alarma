@@ -297,7 +297,7 @@ static void TaskSenzorR()
 			UWriteString("Sirena pornita");
 		}
 	}
-
+/*
 	else if (!armat && !alarm)
 	{
 		if (PINC & (1 << PC3)) //Buton panica
@@ -313,7 +313,7 @@ static void TaskSenzorR()
 	//else if ((PINC & (1 << PC3)) == 0)
 	//senzor_pull = 1;
 
-	/*
+
 	 //opresc sirena dupa 2min
 	 if (contor_m == 2 && senzor_pull)
 	 {
