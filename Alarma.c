@@ -284,10 +284,11 @@ static void TaskAlarma()
 /*-----------------------------------------------------------*/
 static void TaskSenzorR()
 {
+	static int8_t senzor_pull = 1;
 
 	if (armat && !alarm)
 	{
-		if ((PIND & (1 << PD3)) || (PIND & (1 << PD4)) || (PIND & (1 << PD5)))
+		if ((PIND & (1 << PD3)) || (PIND & (1 << PD4)))
 		{
 			UWriteString("Senzor rapid activat");
 			ALARMOn();
@@ -298,20 +299,18 @@ static void TaskSenzorR()
 		}
 	}
 
-	else if (!armat && !alarm)
+	if (armat && (PIND & (1 << PD5)) && senzor_pull)
 	{
-		if (PINC & (1 << PC3)) //Buton panica
-		{
-			ALARMOn();
-			contor_m = 0;
-			//senzor_pull = 0;
+		ALARMOff();
+		ARMOff();
+		senzor_pull = 0;
 #ifdef DEBUG
-			UWriteString("Sirena pornita BP!");
+		UWriteString("Dezarmat!");
 #endif
-		}
 	}
-	//else if ((PINC & (1 << PC3)) == 0)
-	//senzor_pull = 1;
+	else if ((PIND & (1 << PD5)) == 0)
+		senzor_pull = 1;
+
 
 	/*
 	 //opresc sirena dupa 2min
