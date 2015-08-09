@@ -13,7 +13,7 @@ void pinSetUp()
 	//PORTC = 0b11111000;
 	DDRC |= (1 << DDC0) | (1 << DDC1) | (1 << DDC2);
 	DDRC &= ~((1 << DDC3) | (1 << DDC4) | (1 << DDC5));
-	PORTC |= (1 << PD3) | (1 << PD4) | (1 << PD5); // internal Pull UP switch on
+	PORTC |= (1 << PC3) | (1 << PC4) | (1 << PC5); // internal Pull UP switch on
 
 	//DDRB  = 0b00110000; // PB0, BP1, PB2, PB3 IN for keybord; PB4, PB5 OUT for LED
 	//PORTB = 0b11001111;
