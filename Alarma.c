@@ -80,8 +80,8 @@ extern uint8_t alarm;
 static void TasKeypad(); // keibord imput
 static void TaskSenzorL(); // senzor intarziat
 static void TaskSenzorR(); // senzor instant
-static void TaskAlarma(); // actiouni alarma
-static void TaskSemnale(); // actiouni alarma
+static void TaskAlarma(); // actiuni alarma
+static void TaskSemnale(); // actiuni alarma
 
 static void SystemInit();
 
@@ -383,7 +383,7 @@ static void TaskSemnale(void *pvParameters) // actiouni alarma
 	if (((PIND & (1 << PD6)) == 0) && (contor_s % 20 == 15))
 	{
 		//play(">ARR>ARR>A");
-		playFrequency(3000, 50);
+		playFrequency(3000, 180);
 		//vTaskDelayUntil(&xLastWakeTime, (1000 / portTICK_PERIOD_MS));
 
 	}
@@ -411,6 +411,12 @@ static void TaskSemnale(void *pvParameters) // actiouni alarma
 }
 
 /*-----------------------------------------------------------*/
+/**
+ * @brief : initialize the parameter of the system
+ *
+ * @param : no parameters
+ * @return: no return
+ */
 static void SystemInit()
 {
 	//wdt_disable();
