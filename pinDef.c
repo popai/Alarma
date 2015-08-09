@@ -9,11 +9,11 @@
 
 void pinSetUp()
 {
-	//DDRC  = 0b00000111; // PC0, PC1, PC2 OUT for keybord; PC3 IN panick button; PC4 and PC5 IN pins DELL and DEBUG
+	//DDRC  = 0b00001111; // PC0, PC1, PC2 OUT for keybord; PC3 OUT Buzzer; PC4 and PC5 IN pins DELL and DEBUG
 	//PORTC = 0b11111000;
-	DDRC |= (1 << DDC0) | (1 << DDC1) | (1 << DDC2);
-	DDRC &= ~((1 << DDC3) | (1 << DDC4) | (1 << DDC5));
-	PORTC |= (1 << PD3) | (1 << PD4) | (1 << PD5); // internal Pull UP switch on
+	DDRC |= (1 << DDC0) | (1 << DDC1) | (1 << DDC2) | (1 << DDC3);
+	DDRC &= ~((1 << DDC4) | (1 << DDC5));
+	PORTC |= (1 << PC4) | (1 << PC5); // internal Pull UP switch on
 
 	//DDRB  = 0b00110000; // PB0, BP1, PB2, PB3 IN for keybord; PB4, PB5 OUT for LED
 	//PORTB = 0b11001111;
@@ -21,12 +21,12 @@ void pinSetUp()
 	DDRB |= (1 << DDB4) | (1 << DDB5);
 	PORTB |= (1 << PB0) | (1 << PB1) | (1 << PB2) | (1 << PB3); // internal Pull UP switch on
 
-	//DDRD = 0b10001010; // PD2 senzor intarziat PD4, PD5 senzori rapizi, PD3 OUT sunet.
+	//DDRD = 0b10000010; // PD2 senzor intarziat PD3, PD4, PD5 senzori rapizi.
 	//PORTD = 0b01110101;
-	DDRD |= (1 << DDD1) | (1 << DDD3) | (1 << DDD7);
-	DDRD &= ~((1 << DDD0) | (1 << DDD2) | (1 << DDD4) | (1 << DDD5)
+	DDRD |= (1 << DDD1) | (1 << DDD7);
+	DDRD &= ~((1 << DDD0) | (1 << DDD2)| (1 << DDD3) | (1 << DDD4) | (1 << DDD5)
 			| (1 << DDD6));
-	PORTD |= (1 << PD0) | (1 << PD2) | (1 << PD4) | (1 << PD5) | (1 << PD6); // internal Pull UP switch on
+	PORTD |= (1 << PD0) | (1 << PD2)| (1 << PD3) | (1 << PD4) | (1 << PD5) | (1 << PD6); // internal Pull UP switch on
 	//PORTD &= ~(1 << PD6);
 	/*
 	 //setup External Interrupt INT0
