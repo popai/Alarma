@@ -39,7 +39,8 @@ static uint16_t pass_save = 254;
 static uint16_t password = 255;
 static int8_t taskAlarm = 0;
 static uint8_t martor = 0;
-
+unsigned long tmr_millis = 0; //, time for delay action ;
+unsigned long curet_milles = 0;
 extern uint8_t armat;
 extern uint8_t alarm;
 
@@ -128,7 +129,7 @@ static void TaskAlarma()
 	static int8_t changepas = 0;
 
 	//Match Password
-	contor_s = 0;
+	contor_s = 1;
 
 	if ((password == pass_save) && !changepas)
 	{
@@ -155,17 +156,20 @@ static void TaskAlarma()
 #endif
 			//while (GetSeconds() - time_sst < 15);
 			//vTaskDelayUntil( &xLastWakeTime, ( 15000 / portTICK_PERIOD_MS ) );
-			while (contor_s < 30) //weit 15s
-			{
-				playFrequency(5230, 100); // ok tone
-				_delay_ms(500);
-			}
+			/*
+			 while (contor_s < 30) //weit 15s
+			 {
+			 playFrequency(5230, 100); // ok tone
+			 _delay_ms(500);
+			 }
+			 */
 			//playFrequency( 150, 50); // armare tone
 			//OSGiveSema(&sema_senzor);
 			ALARMOff();
 			//wdt_reset();
 			ARMOn();
 			password = 255;
+			tmr_millis = millis();
 		}
 
 	}
@@ -208,12 +212,12 @@ static void TaskAlarma()
 			passOK = 1;
 
 		}
-		else if(password != 0)
+		else if (password != 0)
 		{
 			//Not Allowed to change password
 			Buzer_PassNotOK();
 #ifdef DEBUG
-				Serial.println("Parola neschimbata");
+			Serial.println("Parola neschimbata");
 #endif
 
 			//playFrequency( 2500, 500); // notOK tone
@@ -245,33 +249,42 @@ static void TaskSenzorR()
 
 	if (armat && !alarm)
 	{
-		if ((PIND & (1 << PD4)) || (PIND & (1 << PD5)))
+		if ((millis() - tmr_millis) > 30 * 1000)
 		{
-			Serial.println("Senzor rapid activat");
-			ALARMOn();
-			contor_m = 0;
-			//senzor_pull = 1;
-			martor = 1;
-			Serial.println("Sirena pornita");
+			if ((PIND & (1 << PD4)) || (PIND & (1 << PD5)))
+			{
+				Serial.println("Senzor rapid activat");
+				ALARMOn();
+				contor_m = 0;
+				//senzor_pull = 1;
+				martor = 1;
+				Serial.println("Sirena pornita");
+			}
 		}
-	}
-/*
-	else if (!armat && !alarm)
-	{
-		if (PINC & (1 << PC3)) //Buton panica
+		else if ((millis() - curet_milles) > 1000)
 		{
-			ALARMOn();
-			contor_m = 0;
-			//senzor_pull = 0;
-#ifdef DEBUG
-			Serial.println("Sirena pornita BP!");
-#endif
+			playFrequency(1500, 50);
+			curet_milles = millis();
 		}
+		//playFrequency(5230, 100); // ok tone
 	}
-	//else if ((PINC & (1 << PC3)) == 0)
-	//senzor_pull = 1;
-
 	/*
+	 else if (!armat && !alarm)
+	 {
+	 if (PINC & (1 << PC3)) //Buton panica
+	 {
+	 ALARMOn();
+	 contor_m = 0;
+	 //senzor_pull = 0;
+	 #ifdef DEBUG
+	 Serial.println("Sirena pornita BP!");
+	 #endif
+	 }
+	 }
+	 //else if ((PINC & (1 << PC3)) == 0)
+	 //senzor_pull = 1;
+
+	 /*
 	 //opresc sirena dupa 2min
 	 if (contor_m == 2 && senzor_pull)
 	 {
@@ -295,35 +308,44 @@ static void TaskSenzorL()
 	static int8_t senzorL = 0;
 	if (armat && !alarm)
 	{
-		if ((SENZOR_PINS & (1 << SENZOR_PIN)) && !senzorL) //(PIND & (1 << PD2)) == 1)
+		if ((millis() - tmr_millis) > 30 * 1000)
 		{
-			Serial.println("Senzor intarziat activat");
-			contor_s = 0;
-			senzorL = 1;
-			for (uint8_t n = 0; n < 15; ++n)
+			if ((SENZOR_PINS & (1 << SENZOR_PIN)) && !senzorL) //(PIND & (1 << PD2)) == 1)
 			{
-				playFrequency(1500, 50);
-				_delay_ms(500);
+				Serial.println("Senzor intarziat activat");
+				contor_s = 1;
+				senzorL = 1;
+
+				//playFrequency( 1500, 50); // senzor activ tone
+				//while (contor_s < 12)
+				//;
+				//vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_PERIOD_MS));
+
 			}
-			//playFrequency( 1500, 50); // senzor activ tone
-			//while (contor_s < 12)
-			//;
-			//vTaskDelayUntil(&xLastWakeTime, (500 / portTICK_PERIOD_MS));
-
 		}
 	}
 
-	if (senzorL && (contor_s % 20 == 0))
+	if (senzorL && armat)
 	{
-		senzorL = 0;
-		if (armat && !alarm)
+		if ((millis() - curet_milles) > 1000)
 		{
-			ALARMOn();
-			contor_m = 0;
-			martor = 2;
-			Serial.println("Sirena pornita senzorL");
+			playFrequency(1500, 50);
+			curet_milles = millis();
+
+		}
+		if (contor_s % 20 == 0)
+		{
+			senzorL = 0;
+			if (!alarm)
+			{
+				ALARMOn();
+				contor_m = 0;
+				martor = 2;
+				Serial.println("Sirena pornita senzorL");
+			}
 		}
 	}
+	else senzorL = 0;
 
 #ifdef portHD44780_LCD
 	lcd_Locate (0, 0);
@@ -421,5 +443,4 @@ static void SystemInit()
 }
 
 /*-----------------------------------------------------------*/
-
 
